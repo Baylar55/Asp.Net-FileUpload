@@ -14,6 +14,7 @@ namespace PurpleBuzz_Backend.DAL
         public DbSet<ContactIntroComponent> ContactIntroComponent { get; set; }
         public DbSet<ContactContextComponent> ContactContextComponent { get; set; }
         public DbSet<ContactCommunicationComponent>ContactCommunicationComponents  { get; set; }
-
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<CategoryComponent> CategoryComponents { get; set; }
     }
 }
