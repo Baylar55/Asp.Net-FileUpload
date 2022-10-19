@@ -4,9 +4,10 @@ namespace PurpleBuzz_Backend.Models
 {
     public class Category
     {
+
         public Category()
         {
-            CategoryComponents=new List<CategoryComponent>();
+            CategoryComponents = new List<CategoryComponent>(); 
         }
 
         public int Id { get; set; }
@@ -15,7 +16,7 @@ namespace PurpleBuzz_Backend.Models
         
         public string Title { get; set; }
         
-        public ICollection<CategoryComponent> CategoryComponents;
+        public ICollection<CategoryComponent> CategoryComponents { get; set; }
 
     }
 }

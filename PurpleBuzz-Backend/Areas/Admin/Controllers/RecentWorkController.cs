@@ -52,5 +52,104 @@ namespace PurpleBuzz_Backend.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        //[HttpGet]
+        //public async Task<IActionResult> Update(int id)
+        //{
+        //    var recentWorkComponent = await _appDbContext.RecentWorkComponents.FindAsync(id);
+        //    if (recentWorkComponent == null) return NotFound();
+
+        //    return View(recentWorkComponent);
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> Update(int id, RecentWorkComponent recentWorkComponent)
+        //{
+        //    if (!ModelState.IsValid) return View(recentWorkComponent);
+
+        //    if (id != recentWorkComponent.Id) return BadRequest();
+
+        //    var dbRecentWorkComponent = await _appDbContext.RecentWorkComponents.FindAsync(id);
+        //    if (dbRecentWorkComponent == null) return NotFound();
+
+
+        //    bool isExist = await _appDbContext.RecentWorkComponents
+        //        .AnyAsync(rcw => rcw.Title.ToLower().Trim() == recentWorkComponent.Title.ToLower().Trim() &&
+        //                         rcw.Id != recentWorkComponent.Id);
+
+        //    if (isExist)
+        //    {
+        //        ModelState.AddModelError("Title", "Bu adda komponent mövcuddur");
+        //        return View(recentWorkComponent);
+        //    }
+
+        //    dbRecentWorkComponent.Title = recentWorkComponent.Title;
+        //    dbRecentWorkComponent.Text = recentWorkComponent.Text;
+        //    dbRecentWorkComponent.FilePath = recentWorkComponent.FilePath;
+
+        //    await _appDbContext.SaveChangesAsync();
+        //    return RedirectToAction("Index");
+        //}
+
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
+        {
+            var recentWorkComponent = await _appDbContext.RecentWorkComponents.FindAsync(id);
+            if (recentWorkComponent == null) return NotFound();
+            return View(recentWorkComponent);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, RecentWorkComponent recentWorkComponent)
+        {
+            if (!ModelState.IsValid) return View(recentWorkComponent);
+
+            if (id != recentWorkComponent.Id) return BadRequest();
+
+            var dbRecentWorkComponent = await _appDbContext.RecentWorkComponents.FindAsync(id);
+
+            if (dbRecentWorkComponent == null) return NotFound();
+
+            bool isExist = await _appDbContext.RecentWorkComponents.AnyAsync(rcw=>rcw.Title.ToLower().Trim()==recentWorkComponent.Title.ToLower().Trim() && rcw.Id!=recentWorkComponent.Id);
+            if (isExist)
+            {
+                ModelState.AddModelError("Title", "This component is already exist");
+                return View(recentWorkComponent);
+            }
+            dbRecentWorkComponent.Title = recentWorkComponent.Title;
+            dbRecentWorkComponent.Text = recentWorkComponent.Text;
+            dbRecentWorkComponent.FilePath = recentWorkComponent.FilePath;
+
+            await _appDbContext.SaveChangesAsync();
+            return RedirectToAction("index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var dbRecentWorkComponent = await _appDbContext.RecentWorkComponents.FindAsync(id);
+            if (dbRecentWorkComponent == null) return NotFound();
+
+            return View(dbRecentWorkComponent);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteComponent(int id)
+        {
+            var dbRecentWorkComponent = await _appDbContext.RecentWorkComponents.FindAsync(id);
+            if (dbRecentWorkComponent == null) return NotFound();
+
+            _appDbContext.RecentWorkComponents.Remove(dbRecentWorkComponent);
+            await _appDbContext.SaveChangesAsync();
+
+            return RedirectToAction("index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var recentWorkComponent = await _appDbContext.RecentWorkComponents.FindAsync(id);
+            if (recentWorkComponent == null) return NotFound();
+            return View(recentWorkComponent);
+        }
     }
 }
