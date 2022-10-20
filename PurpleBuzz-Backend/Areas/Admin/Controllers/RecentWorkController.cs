@@ -151,5 +151,6 @@ namespace PurpleBuzz_Backend.Areas.Admin.Controllers
             if (recentWorkComponent == null) return NotFound();
             return View(recentWorkComponent);
         }
+
     }
 }

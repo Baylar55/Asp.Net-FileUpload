@@ -12,16 +12,30 @@ namespace PurpleBuzz_Backend.Controllers
         public HomeController(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
-        }   
+        } 
+        
         public async Task<IActionResult> Index()
         {
-            var recentWorkComponents = await _appDbContext.RecentWorkComponents.ToListAsync();
             var model = new HomeIndexViewModel
             {
-                RecentWorkComponents = recentWorkComponents
+               recentWorkComponents = await _appDbContext.RecentWorkComponents
+                                .OrderByDescending(rwc=>rwc.Id)
+                                .Take(3)
+                                .ToListAsync()
             };
             return View(model);
         }
-        
+
+        public async Task<IActionResult> LoadMore(int skipRow)
+        {
+
+            var recentWorkComponents = await _appDbContext.RecentWorkComponents
+                              .OrderByDescending(rwc => rwc.Id)
+                              .Skip(3 * skipRow)
+                              .Take(3)
+                              .ToListAsync();
+            
+            return PartialView("_RecentWorkComponentPartial",recentWorkComponents);
+        }
     }
 }
