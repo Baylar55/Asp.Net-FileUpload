@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "bnYvajcbTwfjVnZTfWVoFhS9Tg6+5eN2rvfb5MEuxu0=",
+  "Hash": "tqvJ5zKi5TsG2ripoONq3jvvZMtLrBEqnjCoRoivOyY=",
   "Source": "PurpleBuzz-Backend",
   "BasePath": "_content/PurpleBuzz-Backend",
   "Mode": "Default",
@@ -1700,6 +1700,23 @@
       "OriginalItemSpec": "wwwroot\\assets\\fonts\\boxicons.woff2"
     },
     {
+      "Identity": "C:\\Users\\user\\source\\repos\\Asp.Net\\PurpleBuzz-Backend\\PurpleBuzz-Backend\\wwwroot\\assets\\img\\9745ea6b-c45c-4ac4-81d6-71dfd896bef8'_'face5.jpg",
+      "SourceId": "PurpleBuzz-Backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\Asp.Net\\PurpleBuzz-Backend\\PurpleBuzz-Backend\\wwwroot\\",
+      "BasePath": "_content/PurpleBuzz-Backend",
+      "RelativePath": "assets/img/9745ea6b-c45c-4ac4-81d6-71dfd896bef8'_'face5.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\img\\9745ea6b-c45c-4ac4-81d6-71dfd896bef8'_'face5.jpg"
+    },
+    {
       "Identity": "C:\\Users\\user\\source\\repos\\Asp.Net\\PurpleBuzz-Backend\\PurpleBuzz-Backend\\wwwroot\\assets\\img\\apple-icon.png",
       "SourceId": "PurpleBuzz-Backend",
       "SourceType": "Discovered",
@@ -2378,23 +2395,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\img\\team-01.jpg"
-    },
-    {
-      "Identity": "C:\\Users\\user\\source\\repos\\Asp.Net\\PurpleBuzz-Backend\\PurpleBuzz-Backend\\wwwroot\\assets\\img\\team-02.jpg",
-      "SourceId": "PurpleBuzz-Backend",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\user\\source\\repos\\Asp.Net\\PurpleBuzz-Backend\\PurpleBuzz-Backend\\wwwroot\\",
-      "BasePath": "_content/PurpleBuzz-Backend",
-      "RelativePath": "assets/img/team-02.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\img\\team-02.jpg"
     },
     {
       "Identity": "C:\\Users\\user\\source\\repos\\Asp.Net\\PurpleBuzz-Backend\\PurpleBuzz-Backend\\wwwroot\\assets\\img\\team-03.jpg",

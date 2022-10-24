@@ -153,27 +153,30 @@
 </section>
 <!-- End Choice -->
 <!-- Start Aim -->
-<section class="banner-bg bg-white py-5">
+
+@*<section class="banner-bg bg-white py-5">
     <div class="container my-4">
         <div class="row text-center">
-
             @{
-                foreach (var strategyComponent in Model.StrategyComponents)
+                foreach (var objectiveComponent in Model.objectiveComponents)
                 {
                     <div class="objective col-lg-4">
                         <div class="objective-icon card m-auto py-4 mb-2 mb-sm-4 bg-secondary shadow-lg">
-                            <i class="@strategyComponent.FilePath"></i>
+                           @Html.Raw(objectiveComponent.IconTag)
                         </div>
-                        <h2 class="objective-heading h3 mb-2 mb-sm-4 light-300">@strategyComponent.Title</h2>
+                        <h2 class="objective-heading h3 mb-2 mb-sm-4 light-300">@objectiveComponent.Title</h2>
                         <p class="light-300">
-                        @strategyComponent.Text
+                        @objectiveComponent.Text
                         </p>
                     </div>
                 }
             }
         </div>
     </div>
-</section>
+</section>*@
+
+@await Component.InvokeAsync("ObjectiveComponent");
+
 <!-- End Aim -->
 <!-- Start Contact -->
 <section class="banner-bg bg-light py-5">

@@ -1,5 +1,5 @@
 ﻿@using PurpleBuzz_Backend.Models
-@model ContactIntroComponent
+@model ContactIntro
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
@@ -7,19 +7,22 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <div>
-                            <label asp-for="Title">Title</label>
-                            <input class="form-control" asp-for="Title">
-
-                            <br />
-                            <label asp-for="Description">Description</label>
-                            <input class="form-control" asp-for="Description">
-
-                            <br />
-
-                            <label asp-for="FilePath">FilePath</label>
-                            <input class="form-control" asp-for="FilePath">
+                        <div class="form-group ">
+                            <div class="d-flex justify-content-center"><img src="~/assets/img/@Model.PhotoName" /></div>
                         </div>
+                        <div class="form-group">
+                            <label asp-for="Title">Title</label>
+                            <input class="form-control" asp-for="Title" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PrimaryText">Primary Text</label>
+                            <input class="form-control" asp-for="PrimaryText" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description">Description</label>
+                            <input class="form-control" asp-for="Description" disabled>
+                        </div>
+                      
                     </div>
                 </div>
             </div>

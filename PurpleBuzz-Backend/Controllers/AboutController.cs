@@ -1,24 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PurpleBuzz_Backend.Models;
+using Microsoft.EntityFrameworkCore;
+using PurpleBuzz_Backend.DAL;
 using PurpleBuzz_Backend.ViewModels.About;
 
 namespace PurpleBuzz_Backend.Controllers
 {
     public class AboutController : Controller
     {
-        public IActionResult Index()
+        private readonly AppDbContext _appDbContext;
+
+        public AboutController(AppDbContext appDbContext)
         {
-            var strategyComponents = new List<StrategyComponent>
-            {
-                new StrategyComponent{Title="Our vision",Text="Our vision text",FilePath="display-4 bx bxs-bulb text-light"},
-                new StrategyComponent{Title="Our mission",Text="Our mission text",FilePath="display-4 bx bx-revision text-light"},
-                new StrategyComponent{Title="Our goal",Text="Our goal text",FilePath="display-4 bx bxs-select-multiple text-light"}
-            };
-            var model = new AboutIndexViewModel
-            {
-                StrategyComponents = strategyComponents
-            };
-            return View(model);
+            _appDbContext = appDbContext;
+        }
+        public async Task<IActionResult> Index()
+        {
+            //var model = new AboutIndexViewModel
+            //{
+            //    objectiveComponents = await _appDbContext.ObjectiveComponents.ToListAsync()
+            //};
+            //return View(model);
+            return View();
         }
     }
 }

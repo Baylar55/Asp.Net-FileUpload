@@ -114,7 +114,7 @@ namespace PurpleBuzz_Backend.Migrations
                     b.ToTable("ContactContextComponent");
                 });
 
-            modelBuilder.Entity("PurpleBuzz_Backend.Models.ContactIntroComponent", b =>
+            modelBuilder.Entity("PurpleBuzz_Backend.Models.ContactIntro", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,7 +126,10 @@ namespace PurpleBuzz_Backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FilePath")
+                    b.Property<string>("PhotoName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PrimaryText")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -136,7 +139,32 @@ namespace PurpleBuzz_Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactIntroComponent");
+                    b.ToTable("ContactIntro");
+                });
+
+            modelBuilder.Entity("PurpleBuzz_Backend.Models.ObjectiveComponent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("IconTag")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ObjectiveComponents");
                 });
 
             modelBuilder.Entity("PurpleBuzz_Backend.Models.PricingComponent", b =>
@@ -186,6 +214,34 @@ namespace PurpleBuzz_Backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RecentWorkComponents");
+                });
+
+            modelBuilder.Entity("PurpleBuzz_Backend.Models.TeamMember", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhotoPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("TeamMembers");
                 });
 
             modelBuilder.Entity("PurpleBuzz_Backend.Models.CategoryComponent", b =>

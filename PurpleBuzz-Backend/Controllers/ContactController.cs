@@ -15,12 +15,12 @@ namespace PurpleBuzz_Backend.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var contactIntroComponent = await _appDbContext.ContactIntroComponent.FirstOrDefaultAsync();
+            var contactIntro = await _appDbContext.ContactIntro.FirstOrDefaultAsync();
             var contactContextComponent = await _appDbContext.ContactContextComponent.FirstOrDefaultAsync();
             var contactCommunicationComponents = await _appDbContext.ContactCommunicationComponents.ToListAsync();
             var model = new ContactIndexViewModel
             {
-                ContactIntroComponent = contactIntroComponent,
+                ContactIntro = contactIntro,
                 ContactContextComponent=contactContextComponent,
                 ContactCommunicationComponent=contactCommunicationComponents
             };

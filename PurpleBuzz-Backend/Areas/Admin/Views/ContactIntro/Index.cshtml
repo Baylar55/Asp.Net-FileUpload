@@ -15,30 +15,32 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Title</th>
-                                        <th>Description (As Html tag)</th>
-                                        <th>FilePath</th>
+                                        <th>Primary Text</th>
+                                        <th>Description</th>
+                                        <th>Photo</th>
                                         <th colspan="3" style="text-align:center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @{
-                                                @foreach (var contactIntroComponent in Model.ContactIntroComponents)
+                                        @foreach (var contactIntroComponent in Model.ContactIntro)
                                         {
-                                                    <tr>
-                                                        <td>@contactIntroComponent.Id</td>
-                                                        <td>@contactIntroComponent.Title</td>
-                                                        <td>@contactIntroComponent.Description</td>
-                                                        <td>@contactIntroComponent.FilePath</td>
-                                                        <td>
-                                                            <a asp-action="update" asp-controller="contactintro" asp-area="admin" asp-route-id="@contactIntroComponent.Id" class="btn btn-primary">Update</a>
-                                                        </td>
-                                                        <td>
-                                                            <a asp-action="delete" asp-controller="contactintro" asp-area="admin" asp-route-id="@contactIntroComponent.Id" class="btn btn-danger">Delete</a>
-                                                        </td>
-                                                        <td>
-                                                            <a asp-action="details" asp-controller="contactintro" asp-area="admin" asp-route-id="@contactIntroComponent.Id" class="btn btn-info">Details</a>
-                                                        </td>
-                                                    </tr>
+                                            <tr>
+                                                <td>@contactIntroComponent.Id</td>
+                                                <td>@contactIntroComponent.Title</td>
+                                                <td>@contactIntroComponent.PrimaryText</td>
+                                                <td>@contactIntroComponent.Description</td>
+                                                <td><img src="~/assets/img/@contactIntroComponent.PhotoName" /></td>
+                                                <td>
+                                                    <a asp-action="update" asp-controller="contactintro" asp-area="admin" asp-route-id="@contactIntroComponent.Id" class="btn btn-primary">Update</a>
+                                                </td>
+                                                <td>
+                                                    <a asp-action="delete" asp-controller="contactintro" asp-area="admin" asp-route-id="@contactIntroComponent.Id" class="btn btn-danger">Delete</a>
+                                                </td>
+                                                <td>
+                                                    <a asp-action="details" asp-controller="contactintro" asp-area="admin" asp-route-id="@contactIntroComponent.Id" class="btn btn-info">Details</a>
+                                                </td>
+                                            </tr>
                                         }
                                     }
                                 </tbody>

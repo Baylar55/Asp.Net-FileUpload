@@ -4,6 +4,6 @@ namespace PurpleBuzz_Backend.ViewModels.About
 {
     public class AboutIndexViewModel
     {
-        public List<StrategyComponent> StrategyComponents { get; set; }
+        public List<ObjectiveComponent> objectiveComponents { get; set; }
     }
 }

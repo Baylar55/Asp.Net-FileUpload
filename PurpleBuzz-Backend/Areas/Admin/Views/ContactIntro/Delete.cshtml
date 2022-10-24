@@ -1,5 +1,5 @@
 ﻿@using PurpleBuzz_Backend.Models
-@model ContactIntroComponent
+@model ContactIntro
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
@@ -7,24 +7,27 @@
                 <div class="card">
                     <div class="card-body">
                         <p class="card-description">
-                            Delete Contact Intro Component
+                            Delete Intro
                         </p>
+
                         <span>Title:</span>
                         <span>@Model.Title</span>
 
                         <br />
                         <br />
-                        <span>Text:</span>
+                        <span>Primary Text:</span>
+                        <span>@Model.PrimaryText</span>
+                        <br />
+                        <br />
+                        <span>Description:</span>
                         <span>@Model.Description</span>
-
                         <br />
                         <br />
-
-                        <span>File path</span>
-                        <span>@Model.FilePath</span>
-
+                        <span>
+                            <img src="~/assets/img/@Model.PhotoName" />
+                        </span>
                         <form method="post" asp-action="deletecomponent" asp-controller="contactintro" asp-area="admin" asp-route-id="@Model.Id">
-                            <button onclick="confirm('Are you sure?')" class="btn btn-danger">Delete</button>
+                            <button onclick="confirm('Əminsiz mi?')" class="btn btn-danger">Silin</button>
                         </form>
                     </div>
                 </div>
