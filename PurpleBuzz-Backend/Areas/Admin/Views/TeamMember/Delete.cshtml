@@ -23,7 +23,7 @@
                         <span>
                             <img src="~/assets/img/@Model.PhotoPath" />
                         </span>
-                        <form method="post" asp-action="deletecomponent" asp-controller="teammember" asp-area="admin" asp-route-id="@Model.id">
+                        <form method="post" asp-action="deletemember" asp-controller="teammember" asp-area="admin" asp-route-id="@Model.id">
                             <button onclick="confirm('Əminsiz mi?')" class="btn btn-danger">Silin</button>
                         </form>
                     </div>

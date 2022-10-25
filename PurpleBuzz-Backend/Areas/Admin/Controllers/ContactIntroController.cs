@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PurpleBuzz_Backend.Areas.Admin.ViewModels;
+using PurpleBuzz_Backend.Areas.Admin.ViewModels.ContactIntro;
 using PurpleBuzz_Backend.DAL;
+using PurpleBuzz_Backend.Helpers;
 using PurpleBuzz_Backend.Models;
 
 namespace PurpleBuzz_Backend.Areas.Admin.Controllers
@@ -11,18 +13,20 @@ namespace PurpleBuzz_Backend.Areas.Admin.Controllers
     {
         private readonly AppDbContext _appDbContext;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IFileService _fileService;
 
-        public ContactIntroController(AppDbContext appDbContext,IWebHostEnvironment webHostEnvironment)
+        public ContactIntroController(AppDbContext appDbContext, IWebHostEnvironment webHostEnvironment,IFileService fileService)
         {
             _appDbContext = appDbContext;
             _webHostEnvironment = webHostEnvironment;
+           _fileService = fileService;
         }
 
         public async Task<IActionResult> Index()
         {
             var model = new ContactIntroIndexViewModel
             {
-                ContactIntro = await _appDbContext.ContactIntro.ToListAsync()
+                ContactIntro =await _appDbContext.ContactIntro.FirstOrDefaultAsync()
             };
             return View(model);
         }
@@ -45,27 +49,19 @@ namespace PurpleBuzz_Backend.Areas.Admin.Controllers
                 return View(contactIntro);
             }
 
-            if (!contactIntro.Photo.ContentType.Contains("image/"))
+            if (!_fileService.IsImage(contactIntro.Photo))
             {
                 ModelState.AddModelError("Photo", "Uploaded file should be in image format");
                 return View(contactIntro);
             }
 
-            if (contactIntro.Photo.Length / 1024 > 60)
+            if (!_fileService.checkSize(contactIntro.Photo, 60))
             {
                 ModelState.AddModelError("Photo", "Photo size is greater than 60kB");
                 return View(contactIntro);
             }
 
-            var fileName = $"{Guid.NewGuid()}_{contactIntro.Photo.FileName}";
-            var path = Path.Combine(_webHostEnvironment.WebRootPath, "assets/img", fileName);
-
-            using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite))
-            {
-                await contactIntro.Photo.CopyToAsync(fileStream);
-            }
-
-                contactIntro.PhotoName = fileName;
+            contactIntro.PhotoName = await _fileService.UploadAsync(contactIntro.Photo, _webHostEnvironment.WebRootPath);
 
             await _appDbContext.ContactIntro.AddAsync(contactIntro);
             await _appDbContext.SaveChangesAsync();
@@ -79,19 +75,27 @@ namespace PurpleBuzz_Backend.Areas.Admin.Controllers
         {
             var dbContactIntro = await _appDbContext.ContactIntro.FindAsync(id);
             if (dbContactIntro == null) return NotFound();
-            return View(dbContactIntro);
+            var model = new ContactIntroUpdateViewModel
+            {
+                Id = dbContactIntro.Id,
+                Title = dbContactIntro.Title,
+                PrimaryText=dbContactIntro.PrimaryText,
+                Description=dbContactIntro.Description,
+                PhotoName=dbContactIntro.PhotoName
+            };
+            return View(model);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Update(int id, ContactIntro ContactIntro)
+        public async Task<IActionResult> Update(int id, ContactIntroUpdateViewModel model)
         {
-            if (!ModelState.IsValid) return View(ContactIntro);
+            if (!ModelState.IsValid) return View(model);
 
             var dbContactIntro = await _appDbContext.ContactIntro.FindAsync(id);
             if (dbContactIntro == null) return NotFound();
 
-            if (id != ContactIntro.Id) return BadRequest();
+            if (id != model.Id) return BadRequest();
             string fname = Path.Combine(_webHostEnvironment.WebRootPath, "assets/img", dbContactIntro.PhotoName);
             FileInfo file = new FileInfo(fname);
             if (file.Exists)
@@ -100,33 +104,25 @@ namespace PurpleBuzz_Backend.Areas.Admin.Controllers
                 file.Delete();
             }
 
-            if (!ContactIntro.Photo.ContentType.Contains("image/"))
+            if (!_fileService.IsImage(model.Photo))
             {
                 ModelState.AddModelError("Photo", "Uploaded file should be in image format");
-                return View(ContactIntro);
+                return View(model);
             }
 
-            if (ContactIntro.Photo.Length / 1024 > 150)
+            if (!_fileService.checkSize(model.Photo,150))
             {
                 ModelState.AddModelError("Photo", "Photo size is greater than 60kB");
-                return View(ContactIntro);
+                return View(model);
             }
-            var fileName = $"{Guid.NewGuid()}'_'{ContactIntro.Photo.FileName}";
-            var path = Path.Combine(_webHostEnvironment.WebRootPath, "assets/img", fileName);
-
-            using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite))
-            {
-                await ContactIntro.Photo.CopyToAsync(fileStream);
-            }
-
-            dbContactIntro.Title = ContactIntro.Title;
-            dbContactIntro.Description = ContactIntro.Description;
-            dbContactIntro.PrimaryText = ContactIntro.PrimaryText;
-            dbContactIntro.PhotoName = fileName;
+           
+            dbContactIntro.Title = model.Title;
+            dbContactIntro.Description = model.Description;
+            dbContactIntro.PrimaryText = model.PrimaryText;
+            dbContactIntro.PhotoName = await _fileService.UploadAsync(model.Photo, _webHostEnvironment.WebRootPath);
             await _appDbContext.SaveChangesAsync();
             return RedirectToAction("index");
         }
-
 
         public async Task<IActionResult> Delete(int id)
         {
@@ -135,7 +131,7 @@ namespace PurpleBuzz_Backend.Areas.Admin.Controllers
             return View(dbContactIntro);
         }
 
-        public async Task<IActionResult> DeleteMember(int id)
+        public async Task<IActionResult> DeleteIntro(int id)
         {
             var dbContactIntro = await _appDbContext.ContactIntro.FindAsync(id);
             if (dbContactIntro == null) return NotFound();
@@ -158,60 +154,5 @@ namespace PurpleBuzz_Backend.Areas.Admin.Controllers
             if (dbContactIntro == null) return NotFound();
             return View(dbContactIntro);
         }
-
-        //[HttpGet]
-        //public async Task<IActionResult> Update(int id)
-        //{
-        //    var contactIntroComponent = await _appDbContext.ContactIntro.FindAsync(id);
-        //    if (contactIntroComponent == null) return NotFound();
-        //    return View(contactIntroComponent);
-        //}
-
-        //[HttpPost]
-        //public async Task<IActionResult> Update(int id, ContactIntro contactIntroComponent)
-        //{
-        //    if (!ModelState.IsValid) return View(contactIntroComponent);
-        //    bool isExist = await _appDbContext.ContactIntro.AnyAsync(c => c.Title.ToLower().Trim() == contactIntroComponent.Title.ToLower().Trim() && c.Id != contactIntroComponent.Id);
-        //    if (isExist)
-        //    {
-        //        ModelState.AddModelError("Title", "This title is already exist");
-        //        return View(contactIntroComponent);
-        //    }
-        //    if (id != contactIntroComponent.Id) return BadRequest();
-
-        //    var dbContactIntroComponent = await _appDbContext.ContactIntro.FindAsync(id);
-        //    if (dbContactIntroComponent == null) return NotFound();
-        //    dbContactIntroComponent.Title = contactIntroComponent.Title;
-        //    dbContactIntroComponent.Description = contactIntroComponent.Description;
-        //    dbContactIntroComponent.FilePath = contactIntroComponent.FilePath;
-        //    await _appDbContext.SaveChangesAsync();
-        //    return RedirectToAction("index");
-        //}
-
-        //[HttpGet]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    var contactIntroComponent = await _appDbContext.ContactIntro.FindAsync(id);
-        //    if (contactIntroComponent == null) return NotFound();
-        //    return View(contactIntroComponent);
-        //}
-
-        //[HttpPost]
-        //public async Task<IActionResult> DeleteComponent(int id)
-        //{
-        //    var contactIntroComponent = await _appDbContext.ContactIntro.FindAsync(id);
-        //    if (contactIntroComponent == null) return NotFound();
-        //    _appDbContext.Remove(contactIntroComponent);
-        //    await _appDbContext.SaveChangesAsync();
-        //    return RedirectToAction("index");
-        //}
-
-        //[HttpGet]
-        //public async Task<IActionResult> Details(int id)
-        //{
-        //    var contactIntroComponent = await _appDbContext.ContactIntro.FindAsync(id);
-        //    if (contactIntroComponent == null) return NotFound();
-        //    return View(contactIntroComponent);
-        //}
     }
 }

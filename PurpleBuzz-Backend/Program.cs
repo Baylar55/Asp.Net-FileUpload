@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using PurpleBuzz_Backend.DAL;
+using PurpleBuzz_Backend.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<IFileService, FileService>();
 var connectionString = builder.Configuration.GetConnectionString("Default");
 builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString));
 var app = builder.Build();
