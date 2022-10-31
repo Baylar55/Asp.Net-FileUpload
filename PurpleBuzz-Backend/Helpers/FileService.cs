@@ -8,12 +8,13 @@ namespace PurpleBuzz_Backend.Helpers
         public void Delete(string fileName, string webRootPath)
         {
             string fname = Path.Combine(webRootPath, "assets/img",fileName);
-            FileInfo file = new FileInfo(fname);
-            if (file.Exists)
+            //FileInfo file = new FileInfo(fname);
+            if (File.Exists(fname))
             {
                 File.Delete(fname);
-                file.Delete();
+                //file.Delete();
             }
+
         }
 
 

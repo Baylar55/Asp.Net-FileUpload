@@ -1,0 +1,56 @@
+﻿@using PurpleBuzz_Backend.Areas.Admin.ViewModels.CategoryComponent
+@model CategoryComponentUpdateViewModel
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-description">
+                           Update component
+                        </p>
+                        <form method="post" enctype="multipart/form-data" >
+                            <input  asp-for="PhotoPath" type="hidden"/>
+                            <div class="form-group">
+                                <label asp-for="Title">Title</label>
+                                <input class="form-control" asp-for="Title">
+                                <span class="text-danger" asp-validation-for="Title"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Description">Description</label>
+                                <textarea class="form-control" asp-for="Description"></textarea>
+                                <span class="text-danger" asp-validation-for="Description"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Photo">Photo</label>
+                                <img style="height:100px; width=100px; border-radius:50%" src="@Model.PhotoPath" />
+                                <input class="form-control" asp-for="Photo">
+                                <span class="text-danger" asp-validation-for="Photo"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="CategoryId">Category</label>
+                                <select class="form-control" asp-for="CategoryId" asp-items="Model.Categories"></select>
+                                <span class="text-danger" asp-validation-for="CategoryId"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary me-2">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial");
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#Description'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+
+}

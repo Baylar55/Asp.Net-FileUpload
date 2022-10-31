@@ -198,8 +198,20 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-action="index" asp-controller="teammember" asp-area="admin">
-                            <span style="margin-right:20.5px" class="mdi mdi-contacts"></span>
+                            <span style="margin-right:20.5px" class="mdi mdi-account"></span>
                             <span class="menu-title">Team Members</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="index" asp-controller="categorycomponent" asp-area="admin">
+                            <span style="margin-right:20.5px" class="mdi mdi-grid"></span>
+                            <span class="menu-title">Category components</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="index" asp-controller="featuredworkcomponent" asp-area="admin">
+                            <span style="margin-right:20.5px" class="mdi mdi-chart-donut"></span>
+                            <span class="menu-title">Featured Work component</span>
                         </a>
                     </li>
                 </ul>
@@ -231,6 +243,7 @@
 
     <script src="~/admin/js/jquery.cookie.js" type="text/javascript"></script>
     @RenderSection("Scripts",false)
+  
 </body>
 
 </html>

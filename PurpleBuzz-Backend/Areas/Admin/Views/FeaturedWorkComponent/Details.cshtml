@@ -1,0 +1,55 @@
+﻿@using PurpleBuzz_Backend.Areas.Admin.ViewModels.FeaturedWorkComponent
+@model FeaturedWorkComponentDetailsViewModel
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-description">
+                          Details of Feature Work Component
+                        </p>
+                        <form method="post" enctype="multipart/form-data" asp-action="details" asp-controller="featuredworkcomponent" asp-area="admin">
+                            <div class="form-group">
+                                <label asp-for="Title">Title</label>
+                                <input class="form-control" asp-for="Title" disabled>
+                                <span class="text-danger" asp-validation-for="Title"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Description">Description</label>
+                                <textarea class="form-control" asp-for="Description" disabled></textarea>
+                                <span class="text-danger" asp-validation-for="Description"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Photos">Photos</label>
+                        </form>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Photo</th>
+                                        <th>Order</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var photo in Model.FeaturedWorkComponentPhotos)
+                                    {
+                                        <tr>
+                                            <td>@photo.Id</td>
+                                            <td><img src="~/assets/img/@photo.Name" /></td>
+                                            <td>@photo.Order</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

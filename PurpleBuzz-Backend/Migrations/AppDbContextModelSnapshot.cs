@@ -142,6 +142,52 @@ namespace PurpleBuzz_Backend.Migrations
                     b.ToTable("ContactIntro");
                 });
 
+            modelBuilder.Entity("PurpleBuzz_Backend.Models.FeaturedWorkComponent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FeaturedWorkComponent");
+                });
+
+            modelBuilder.Entity("PurpleBuzz_Backend.Models.FeaturedWorkComponentPhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("FeaturedWorkComponentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FeaturedWorkComponentId");
+
+                    b.ToTable("FeaturedWorkComponentPhotos");
+                });
+
             modelBuilder.Entity("PurpleBuzz_Backend.Models.ObjectiveComponent", b =>
                 {
                     b.Property<int>("Id")
@@ -255,9 +301,23 @@ namespace PurpleBuzz_Backend.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("PurpleBuzz_Backend.Models.FeaturedWorkComponentPhoto", b =>
+                {
+                    b.HasOne("PurpleBuzz_Backend.Models.FeaturedWorkComponent", null)
+                        .WithMany("FeaturedWorkComponentPhotos")
+                        .HasForeignKey("FeaturedWorkComponentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("PurpleBuzz_Backend.Models.Category", b =>
                 {
                     b.Navigation("CategoryComponents");
+                });
+
+            modelBuilder.Entity("PurpleBuzz_Backend.Models.FeaturedWorkComponent", b =>
+                {
+                    b.Navigation("FeaturedWorkComponentPhotos");
                 });
 #pragma warning restore 612, 618
         }

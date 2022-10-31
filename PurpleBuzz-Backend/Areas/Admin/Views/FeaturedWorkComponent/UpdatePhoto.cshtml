@@ -1,0 +1,45 @@
+﻿@using PurpleBuzz_Backend.Areas.Admin.ViewModels.FeaturedWorkComponent.FeaturedWorkComponentPhoto
+@model FeaturedWorkComponentPhotoUpdateViewModel
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-description">
+                            Update Feature Work Component
+                        </p>
+                        <form method="post" enctype="multipart/form-data" asp-action="updatephoto" asp-controller="featuredworkcomponent" asp-area="admin">
+
+                            <div class="form-group">
+                                <label asp-for="Order">Order</label>
+                                <input asp-for="Order">
+                                <span asp-validation-for="Order"></span>
+                            </div>
+
+
+                            <button type="submit" class="btn btn-primary me-2">Submit</button>
+                            <button class="btn btn-light">Cancel</button>
+                        </form>
+                     
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial");
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#Description'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+
+}
+

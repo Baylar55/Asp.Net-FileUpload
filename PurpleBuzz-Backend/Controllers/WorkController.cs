@@ -16,9 +16,13 @@ namespace PurpleBuzz_Backend.Controllers
         public async Task<IActionResult> Index()
         {
             var categories = await _appDbContext.Categories.Include(c => c.CategoryComponents).ToListAsync();
+
             var model = new WorkIndexViewModel
             {
                 Categories = categories,
+                FeaturedWorkComponent = await _appDbContext.FeaturedWorkComponent
+                .Include(fwc => fwc.FeaturedWorkComponentPhotos.OrderBy(fcwp => fcwp.Order))
+                .FirstOrDefaultAsync()
             };
             return View(model);
         }

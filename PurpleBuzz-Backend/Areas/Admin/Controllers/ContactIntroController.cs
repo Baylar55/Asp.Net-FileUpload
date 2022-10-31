@@ -137,12 +137,14 @@ namespace PurpleBuzz_Backend.Areas.Admin.Controllers
             if (dbContactIntro == null) return NotFound();
 
             string fname = Path.Combine(_webHostEnvironment.WebRootPath, "assets/img", dbContactIntro.PhotoName);
-            FileInfo file = new FileInfo(fname);
-            if (file.Exists)
-            {
-                System.IO.File.Delete(fname);
-                file.Delete();
-            }
+            //FileInfo file = new FileInfo(fname);
+            //if (file.Exists)
+            //{
+            //    System.IO.File.Delete(fname);
+            //    file.Delete();
+            //}
+
+            _fileService.Delete(fname, _webHostEnvironment.WebRootPath);
 
             _appDbContext.ContactIntro.Remove(dbContactIntro);
             return RedirectToAction("index");
